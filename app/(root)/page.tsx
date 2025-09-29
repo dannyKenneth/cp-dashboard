@@ -1,6 +1,10 @@
+"use client";
 import Image from "next/image";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function Home() {
+  const tasks = useQuery(api.tasks.get);
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -12,6 +16,9 @@ export default function Home() {
           height={38}
           priority
         />
+        <div className="flex min-h-screen flex-col items-center justify-between p-24 text-white">
+          {tasks?.map(({ _id, text }) => <div key={_id}>{text}</div>)}
+        </div>
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
